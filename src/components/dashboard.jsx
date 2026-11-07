@@ -1,6 +1,9 @@
 import { useState } from "react";
 import FilterBar from "./filter-bar";
 import TaskList from "./task-list";
+import { DashboardSkeleton } from "./skeleton";
+import ErrorMessage from "./error-message";
+import EmptyState from "./empty-state";
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "../api/todos";
 
@@ -27,6 +30,8 @@ export const Dashboard = () => {
     data: todos,
     isLoading,
     isError,
+    error,
+    refetch,
   } = useQuery({
     queryKey: ["todos"],
     queryFn: getData,
@@ -38,8 +43,31 @@ export const Dashboard = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
   const users = todos ? reduceToUsers(todos) : [];
 
-  if (isLoading) return <p>Loading Please wait...</p>;
-  if (isError) return <p>Error</p>;
+  if (isLoading) return <DashboardSkeleton />;
+  if (isError)
+    return (
+      <ErrorMessage
+        title="Couldn't load tasks"
+        message="Something went wrong loading tasks. Please try again."
+        detail={error.message}
+        onRetry={refetch}
+      />
+    );
+
+  if (todos.length === 0)
+    return (
+      <EmptyState
+        title="No tasks yet"
+        message="There are no tasks to show right now."
+        actionLabel="Refresh"
+        onAction={refetch}
+      />
+    );
+
+  const clearFilters = () => {
+    setSelectedUser(0);
+    setSelectedStatus("");
+  };
 
   const filterData = todos.filter((todo) => {
     const matchesUser = selectedUser === 0 || todo.userId === selectedUser;
@@ -58,7 +86,16 @@ export const Dashboard = () => {
         selectedStatus={selectedStatus}
         onStatusChange={setSelectedStatus}
       />
-      <TaskList todos={filterData} />
+      {filterData.length === 0 ? (
+        <EmptyState
+          title="No tasks match your filters"
+          message="Try a different status or user."
+          actionLabel="Clear filters"
+          onAction={clearFilters}
+        />
+      ) : (
+        <TaskList todos={filterData} />
+      )}
     </section>
   );
 };

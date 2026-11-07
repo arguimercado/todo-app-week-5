@@ -1,6 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getData } from "../api/todos";
 import StatCard from "./stat-card";
+import { StatsSkeleton } from "./skeleton";
+import ErrorMessage from "./error-message";
+import EmptyState from "./empty-state";
 
 // Count of done todos per userId, e.g. [{ userId: 1, count: 11 }, ...]
 function doneCountByUser(todos) {
@@ -21,14 +24,34 @@ function Stats() {
     data: todos,
     isLoading,
     isError,
+    error,
+    refetch,
   } = useQuery({
     queryKey: ["todos"],
     queryFn: getData,
     staleTime: 1 * 60 * 100,
   });
 
-  if (isLoading) return <p>Loading Please wait...</p>;
-  if (isError) return <p>Error</p>;
+  if (isLoading) return <StatsSkeleton />;
+  if (isError)
+    return (
+      <ErrorMessage
+        title="Couldn't load stats"
+        message="Something went wrong loading the statistics. Please try again."
+        detail={error.message}
+        onRetry={refetch}
+      />
+    );
+
+  if (todos.length === 0)
+    return (
+      <EmptyState
+        title="No statistics yet"
+        message="There are no tasks to summarize right now."
+        actionLabel="Refresh"
+        onAction={refetch}
+      />
+    );
 
   const total = todos.length;
   const done = todos.filter((todo) => todo.completed).length;
@@ -49,6 +72,13 @@ function Stats() {
 
       <h3 className="text-lg font-bold">Done tasks by user</h3>
 
+      {doneByUser.length === 0 ? (
+        <EmptyState
+          compact
+          title="No completed tasks yet"
+          message="Finished tasks will show up here, grouped by user."
+        />
+      ) : (
       <ul className="flex flex-col gap-3">
         {doneByUser.map((row) => (
           <li key={row.userId} className="flex items-center gap-3">
@@ -65,6 +95,7 @@ function Stats() {
           </li>
         ))}
       </ul>
+      )}
     </section>
   );
 }
