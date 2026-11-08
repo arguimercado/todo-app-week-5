@@ -1,0 +1,54 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "formatOnSave": true,
+    "tabSize": 2,
+    "insertSpaces": true,
+    "defaultFormatter": "cursor",
+    "fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    "fontSize": 14,
+    "lineHeight": 1.5,
+    "wordWrap": "on",
+    "editor.defaultFormatter": "cursor",
+    "cursor.ai": {
+      "enabled": true,
+      "model": "default",
+      "suggestions": true,
+      "rules": "",
+      "includeCursorRulesFile": true,
+      "autoComplete": true
+    },
+    "cursor.workspace": {
+      "name": "todo-app",
+      "type": "Web Application",
+      "languages": [
+        "react vite"
+      ],
+      "frameworks": [
+        "react-router-dom",
+        "tanstack-query"
+      ],
+      "importVSCodeSettings": false
+    },
+    "cursor.updates": {
+      "earlyAccessProgram": false,
+      "automaticUpdates": true,
+      "checkForUpdatesOnStartup": true
+    },
+    "cursor.beta": {
+      "experimentalAIFeatures": false,
+      "advancedCompletion": false,
+      "alternativeModels": false
+    },
+    "[javascriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}
