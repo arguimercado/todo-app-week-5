@@ -1,4 +1,6 @@
-# TaskBoard
+
+# Week 5 Mini Project
+## Arnold G. Mercado
 
 A small task manager built with React. It loads a list of todos from the public [JSONPlaceholder](https://jsonplaceholder.typicode.com/) API, lets you filter them, and shows summary statistics.
 
