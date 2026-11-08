@@ -12,6 +12,23 @@ A small task manager built with React. It loads a list of todos from the public 
 - **Loading, error and empty states:** skeleton placeholders while loading, an error card with a "Try again" button, and an empty message (with "Clear filters") when nothing matches.
 - Responsive layout with Tailwind CSS (filters and cards stack on small screens).
 
+## Screenshots
+
+### Tasks
+![Tasks page showing the full list of todos with status and user filters](docs/screenshots/tasks.png)
+
+### Tasks filtered by status and user
+![Tasks page filtered to Done tasks for User 1](docs/screenshots/tasks-filtered.png)
+
+### Stats
+![Stats page with total, done and open counts and a bar chart of done tasks per user](docs/screenshots/stats.png)
+
+### Task detail
+![Task detail page for a single task](docs/screenshots/task-detail.png)
+
+### About
+![About page](docs/screenshots/about.png)
+
 ## Tech stack
 
 - [React](https://react.dev/) 19
